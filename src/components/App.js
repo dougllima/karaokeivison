@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { withTheme } from "@material-ui/core/styles";
 
-import Root from "./components/Root";
+import Root from "./Root";
 
 import "typeface-roboto";
 
