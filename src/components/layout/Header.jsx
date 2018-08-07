@@ -10,6 +10,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Link } from "react-router-dom";
+import AppContext from "./../../lib/appContext";
+import { LoginFunc } from "../../service/authService";
 
 const styles = {
   root: {
@@ -44,46 +46,60 @@ class Header extends Component {
     this.setState({ menuOpen: null });
   };
 
+  login = callback => {
+    LoginFunc(e => callback(e), e => console.log(e));
+  };
+
   render() {
     const { classes } = this.props;
     const { menuOpen } = this.state;
     return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Menu"
-              aria-owns={menuOpen ? "simple-menu" : null}
-              aria-haspopup="true"
-              onClick={this.handleClick}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="simple-menu"
-              menuOpen={menuOpen}
-              open={Boolean(menuOpen)}
-              onClose={this.handleClose}
-            >
-              <Link to="/">
-                <MenuItem onClick={this.handleClose}>Página Inicial</MenuItem>
-              </Link>
-            </Menu>
-            <Typography
-              variant="title"
-              color="inherit"
-              className={classes.flex}
-            >
-              {this.props.title}
-            </Typography>
-            <Link to="/login" className={classes.link}>
-              <Button>Login</Button>
-            </Link>
-          </Toolbar>
-        </AppBar>
-      </div>
+      <AppContext.Consumer>
+        {value => {
+          const { user, setUser } = value;
+          return (
+            <div className={classes.root}>
+              <AppBar position="static">
+                <Toolbar>
+                  <IconButton
+                    className={classes.menuButton}
+                    color="inherit"
+                    aria-label="Menu"
+                    aria-owns={menuOpen ? "simple-menu" : null}
+                    aria-haspopup="true"
+                    onClick={this.handleClick}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Menu
+                    id="simple-menu"
+                    open={Boolean(menuOpen)}
+                    onClose={this.handleClose}
+                  >
+                    <Link to="/">
+                      <MenuItem onClick={this.handleClose}>
+                        Página Inicial
+                      </MenuItem>
+                    </Link>
+                  </Menu>
+                  <Typography
+                    variant="title"
+                    color="inherit"
+                    className={classes.flex}
+                  >
+                    {this.props.title}
+                  </Typography>
+                  {user ? (
+                    user.displayName
+                  ) : (
+                    <Button onClick={() => this.login(setUser)}>Login</Button>
+                  )}
+                </Toolbar>
+              </AppBar>
+            </div>
+          );
+        }}
+      </AppContext.Consumer>
     );
   }
 }
