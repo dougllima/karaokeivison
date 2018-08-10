@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { GithubPicker, CirclePicker, TwitterPicker } from "react-color";
 import AppContext from "../lib/appContext";
-import colors from "../lib/themes";
+import * as Themes from "../lib/themes";
 import User from "./User";
+import color from "../../node_modules/@material-ui/core/colors/grey";
 
 const styles = theme => ({
   button: {
@@ -21,6 +22,21 @@ class Profile extends Component {
     this.state = { loged: false };
   }
 
+  changeTheme = (color, setTheme) => {
+    const themeColor = Themes.getTheme(color.hex);
+
+    var theme = {
+      palette: {
+        primary: themeColor,
+        secondary: themeColor,
+        type: "dark"
+      }
+    };
+    console.log(theme, themeColor);
+
+    setTheme(theme);
+  };
+
   render() {
     return (
       <AppContext.Consumer>
@@ -28,11 +44,20 @@ class Profile extends Component {
           const { user, userTheme, setTheme } = value;
           return (
             <div style={{ padding: "10px" }}>
-              <GithubPicker width="250px" triangle="hide" colors={colors} />
+              <GithubPicker
+                width="250px"
+                triangle="hide"
+                colors={Themes.getColors()}
+                onChange={(color, event) => this.changeTheme(color, setTheme)}
+              />
               <br />
-              <CirclePicker width="252px" colors={colors} />
+              <CirclePicker width="294px" colors={Themes.getColors()} />
               <br />
-              <TwitterPicker triangle="hide" colors={colors} />
+              <TwitterPicker
+                triangle="hide"
+                width="204px"
+                colors={Themes.getColors()}
+              />
               <User user={user} />
             </div>
           );

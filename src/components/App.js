@@ -12,7 +12,8 @@ import Root from "./Root";
 import "typeface-roboto";
 
 library.add(fab);
-var theme = {
+var theme = {};
+var defaultTheme = {
   palette: {
     primary: colors.lightBlue,
     secondary: colors.amber,
@@ -27,7 +28,8 @@ class App extends Component {
         <AppContext.Consumer>
           {value => {
             var { userTheme } = value;
-            theme = createMuiTheme(userTheme ? userTheme : theme);
+            theme = {};
+            theme = createMuiTheme(userTheme ? userTheme : defaultTheme);
             return (
               <MuiThemeProvider theme={theme}>
                 <Root />
