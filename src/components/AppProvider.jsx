@@ -2,11 +2,29 @@ import React, { Component } from "react";
 import AppContext from "../lib/appContext";
 
 class AppProvider extends Component {
-  state = {
-    user: null,
-    setUser: user => {
-      this.setState({ user });
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: this.checkProps("user"),
+      userTheme: this.checkProps("userTheme"),
+      setUser: user => this.saveProp("user", user),
+      setTheme: theme => this.saveProp("userTheme", theme)
+    };
+  }
+
+  checkProps = name => {
+    return localStorage.getItem(name)
+      ? JSON.parse(localStorage.getItem(name))
+      : null;
+  };
+
+  saveProp = (name, prop) => {
+    var state = this.state;
+    state[name] = prop;
+    this.setState(state, () => {
+      if (prop != null) localStorage.setItem(name, JSON.stringify(prop));
+      else localStorage.removeItem(name);
+    });
   };
 
   render() {

@@ -12,6 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { Link } from "react-router-dom";
 import AppContext from "./../../lib/appContext";
 import { LoginFunc } from "../../service/authService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const styles = {
   root: {
@@ -34,25 +35,30 @@ class Header extends Component {
     super(props);
 
     this.state = {
-      menuOpen: false
+      menuNav: false,
+      menuProfile: false,
+      menuLogin: false
     };
   }
 
-  handleClick = event => {
-    this.setState({ menuOpen: event.currentTarget });
+  handleClickMenu = (event, name) => {
+    var state = this.state;
+    state[name] = event.currentTarget;
+    this.setState(state);
   };
 
-  handleClose = () => {
-    this.setState({ menuOpen: null });
+  handleCloseMenu = (event, name) => {
+    var state = this.state;
+    state[name] = null;
+    this.setState(state);
   };
 
-  login = callback => {
+  loginFacebook = callback => {
     LoginFunc(e => callback(e), e => console.log(e));
   };
 
   render() {
     const { classes } = this.props;
-    const { menuOpen } = this.state;
     return (
       <AppContext.Consumer>
         {value => {
@@ -61,27 +67,7 @@ class Header extends Component {
             <div className={classes.root}>
               <AppBar position="static">
                 <Toolbar>
-                  <IconButton
-                    className={classes.menuButton}
-                    color="inherit"
-                    aria-label="Menu"
-                    aria-owns={menuOpen ? "simple-menu" : null}
-                    aria-haspopup="true"
-                    onClick={this.handleClick}
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                  <Menu
-                    id="simple-menu"
-                    open={Boolean(menuOpen)}
-                    onClose={this.handleClose}
-                  >
-                    <Link to="/">
-                      <MenuItem onClick={this.handleClose}>
-                        Página Inicial
-                      </MenuItem>
-                    </Link>
-                  </Menu>
+                  {this.getMainMenu(classes)}
                   <Typography
                     variant="title"
                     color="inherit"
@@ -89,11 +75,9 @@ class Header extends Component {
                   >
                     {this.props.title}
                   </Typography>
-                  {user ? (
-                    user.displayName
-                  ) : (
-                    <Button onClick={() => this.login(setUser)}>Login</Button>
-                  )}
+                  {user
+                    ? this.getProfileMenu(user, setUser)
+                    : this.getLoginMenu(user, setUser)}
                 </Toolbar>
               </AppBar>
             </div>
@@ -102,6 +86,95 @@ class Header extends Component {
       </AppContext.Consumer>
     );
   }
+
+  getMainMenu = classes => {
+    const { menuNav } = this.state;
+    return (
+      <div>
+        <IconButton
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="Menu"
+          aria-owns={menuNav ? "simple-menu" : null}
+          aria-haspopup="true"
+          onClick={e => this.handleClickMenu(e, "menuNav")}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          id="simple-menu"
+          open={Boolean(menuNav)}
+          onClose={e => this.handleCloseMenu(e, "menuNav")}
+        >
+          <Link to="/">
+            <MenuItem onClick={e => this.handleCloseMenu(e, "menuNav")}>
+              Página Inicial
+            </MenuItem>
+          </Link>
+        </Menu>
+      </div>
+    );
+  };
+
+  getProfileMenu = (user, setUser) => {
+    const { menuProfile } = this.state;
+    return (
+      <div>
+        <Button onClick={e => this.handleClickMenu(e, "menuProfile")}>
+          {user.displayName}
+        </Button>
+        <Menu
+          id="profile-menu"
+          anchorEl={menuProfile}
+          open={Boolean(menuProfile)}
+          onClose={e => this.handleCloseMenu(e, "menuProfile")}
+        >
+          <Link to="/profile">
+            <MenuItem onClick={e => this.handleCloseMenu(e, "menuProfile")}>
+              Perfil
+            </MenuItem>
+          </Link>
+          <MenuItem
+            onClick={e => {
+              this.handleCloseMenu(e, "menuProfile");
+              setUser(null);
+            }}
+          >
+            Sair
+          </MenuItem>
+        </Menu>
+      </div>
+    );
+  };
+
+  getLoginMenu = (user, setUser) => {
+    const { menuLogin } = this.state;
+    return (
+      <div>
+        <Button onClick={e => this.handleClickMenu(e, "menuLogin")}>
+          Login
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={menuLogin}
+          open={Boolean(menuLogin)}
+          onClose={e => this.handleCloseMenu(e, "menuLogin")}
+        >
+          <MenuItem
+            onClick={() =>
+              this.loginFacebook(e => {
+                this.handleCloseMenu(null, "menuLogin");
+                setUser(e);
+              })
+            }
+          >
+            <FontAwesomeIcon icon={["fab", "facebook-square"]} />
+            &nbsp; Login com Facebook
+          </MenuItem>
+        </Menu>
+      </div>
+    );
+  };
 }
 
 Header.propTypes = {

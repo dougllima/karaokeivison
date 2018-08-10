@@ -1,23 +1,41 @@
 import React, { Component } from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { withTheme } from "@material-ui/core/styles";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import AppProvider from "./AppProvider";
+import AppContext from "./..//lib/appContext";
+import * as colors from "@material-ui/core/colors";
 
 import Root from "./Root";
 
 import "typeface-roboto";
 
-const theme = createMuiTheme({
+library.add(fab);
+var theme = {
   palette: {
+    primary: colors.lightBlue,
+    secondary: colors.amber,
     type: "dark"
   }
-});
+};
 
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <Root />
-      </MuiThemeProvider>
+      <AppProvider>
+        <AppContext.Consumer>
+          {value => {
+            var { userTheme } = value;
+            theme = createMuiTheme(userTheme ? userTheme : theme);
+            return (
+              <MuiThemeProvider theme={theme}>
+                <Root />
+              </MuiThemeProvider>
+            );
+          }}
+        </AppContext.Consumer>
+      </AppProvider>
     );
   }
 }
