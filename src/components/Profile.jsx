@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { CirclePicker } from "react-color";
+import { GithubPicker } from "react-color";
 import AppContext from "../lib/appContext";
-import { colors } from "../lib/themes";
+import colors from "../lib/themes";
 import User from "./User";
 
 const styles = theme => ({
@@ -28,7 +28,7 @@ class Profile extends Component {
           const { user, userTheme, setTheme } = value;
           return (
             <div>
-              <CirclePicker colors={colors} />
+              <GithubPicker colors={colors} />
               <User user={user} />
             </div>
           );
