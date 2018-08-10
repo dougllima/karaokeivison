@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { GithubPicker } from "react-color";
+import { GithubPicker, CirclePicker, TwitterPicker } from "react-color";
 import AppContext from "../lib/appContext";
 import colors from "../lib/themes";
 import User from "./User";
@@ -27,8 +27,12 @@ class Profile extends Component {
         {value => {
           const { user, userTheme, setTheme } = value;
           return (
-            <div>
-              <GithubPicker colors={colors} />
+            <div style={{ padding: "10px" }}>
+              <GithubPicker width="250px" triangle="hide" colors={colors} />
+              <br />
+              <CirclePicker width="252px" colors={colors} />
+              <br />
+              <TwitterPicker triangle="hide" colors={colors} />
               <User user={user} />
             </div>
           );
