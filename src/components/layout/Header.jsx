@@ -115,7 +115,6 @@ class Header extends Component {
       </div>
     );
   };
-
   getProfileMenu = (user, setUser) => {
     const { menuProfile } = this.state;
     return (
@@ -123,7 +122,7 @@ class Header extends Component {
         <Button
           color="inherit"
           onClick={e => this.handleClickMenu(e, "menuProfile")}
-        >
+        > 
           {user.displayName}
         </Button>
         <Menu
