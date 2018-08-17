@@ -51,11 +51,11 @@ class ThemePicker extends Component {
     var theme = {
       palette: {
         primary: primary,
-        secondary: secondary,
-        type: type,
-        background: {
-          default: this.type === "light" ? "#000" : "#fff"
-        }
+        secondary: secondary
+        // type: type,
+        // background: {
+        //   default: this.type === "light" ? "#000" : "#fff"
+        // }
       }
     };
 

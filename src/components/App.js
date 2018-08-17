@@ -16,8 +16,8 @@ var theme = {};
 var defaultTheme = {
   palette: {
     primary: colors.lightBlue,
-    secondary: colors.amber,
-    type: "dark"
+    secondary: colors.amber
+    // type: "dark"
   }
 };
 class App extends Component {

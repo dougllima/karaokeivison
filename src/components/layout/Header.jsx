@@ -68,7 +68,11 @@ class Header extends Component {
               <AppBar position="static">
                 <Toolbar>
                   {this.getMainMenu(classes)}
-                  <Typography variant="title" className={classes.flex}>
+                  <Typography
+                    color="inherit"
+                    variant="title"
+                    className={classes.flex}
+                  >
                     {this.props.title}
                   </Typography>
                   {user
@@ -116,7 +120,10 @@ class Header extends Component {
     const { menuProfile } = this.state;
     return (
       <div>
-        <Button onClick={e => this.handleClickMenu(e, "menuProfile")}>
+        <Button
+          color="inherit"
+          onClick={e => this.handleClickMenu(e, "menuProfile")}
+        >
           {user.displayName}
         </Button>
         <Menu
@@ -147,7 +154,10 @@ class Header extends Component {
     const { menuLogin } = this.state;
     return (
       <div>
-        <Button onClick={e => this.handleClickMenu(e, "menuLogin")}>
+        <Button
+          color="inherit"
+          onClick={e => this.handleClickMenu(e, "menuLogin")}
+        >
           Login
         </Button>
         <Menu
