@@ -68,11 +68,7 @@ class Header extends Component {
               <AppBar position="static">
                 <Toolbar>
                   {this.getMainMenu(classes)}
-                  <Typography
-                    variant="title"
-                    color="inherit"
-                    className={classes.flex}
-                  >
+                  <Typography variant="title" className={classes.flex}>
                     {this.props.title}
                   </Typography>
                   {user

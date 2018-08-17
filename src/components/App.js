@@ -20,8 +20,13 @@ var defaultTheme = {
     type: "dark"
   }
 };
-
 class App extends Component {
+  constructor(prop) {
+    super(prop);
+
+    if (!localStorage.getItem("userTheme"))
+      localStorage.setItem("userTheme", JSON.stringify(defaultTheme));
+  }
   render() {
     return (
       <AppProvider>

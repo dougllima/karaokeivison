@@ -26,6 +26,7 @@
     "@fortawesome/react-fontawesome": "0.1.0-11",
     "@material-ui/core": "^1.4.2",
     "@material-ui/icons": "^2.0.0",
+    "@material-ui/lab": "^1.0.0-alpha.10",
     "react-color": "^2.14.1"
   }
 }
