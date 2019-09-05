@@ -16,8 +16,8 @@ var theme = {};
 var defaultTheme = {
   palette: {
     primary: colors.lightBlue,
-    secondary: colors.amber
-    // type: "dark"
+    secondary: colors.amber,
+    type: "dark"
   }
 };
 class App extends Component {
@@ -33,7 +33,6 @@ class App extends Component {
         <AppContext.Consumer>
           {value => {
             var { userTheme } = value;
-            theme = {};
             theme = createMuiTheme(userTheme ? userTheme : defaultTheme);
             return (
               <MuiThemeProvider theme={theme}>

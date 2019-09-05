@@ -9,7 +9,7 @@ class AppProvider extends Component {
       userTheme: this.checkProps("userTheme"),
       setUser: user => this.saveProp("user", user),
       setTheme: theme => this.saveProp("userTheme", theme),
-      saveTheme: userTheme => this.savePropDB("userTheme", userTheme)
+      saveTheme: userTheme => this.saveProp("userTheme", userTheme)
     };
   }
 

@@ -5,7 +5,7 @@ import * as Themes from "../../lib/themes";
 import AppContext from "../../lib/appContext";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import ToggleButton, { ToggleButtonGroup } from "@material-ui/lab/ToggleButton";
+// import ToggleButton, { ToggleButtonGroup } from "@material-ui/lab/ToggleButton";
 
 import LightBulb from "./../layout/LightBulb";
 import LightBulbOn from "./../layout/LightBulbOn";
@@ -46,9 +46,12 @@ class ThemePicker extends Component {
       case "type":
         type = parammeter;
         break;
+      default:
+        break;
     }
 
-    var theme = {
+    theme = {
+      ...theme,
       palette: {
         primary: primary,
         secondary: secondary
@@ -105,7 +108,7 @@ class ThemePicker extends Component {
                 <SaveIcon />
                 Salvar Mudanças
               </Button>
-              <div className={classes.toggleContainer}>
+              {/* <div className={classes.toggleContainer}>
                 <ToggleButtonGroup
                   value={userTheme.palette.type}
                   exclusive
@@ -119,7 +122,7 @@ class ThemePicker extends Component {
                     <LightBulbOn type={userTheme.palette.type} />
                   </ToggleButton>
                 </ToggleButtonGroup>
-              </div>
+              </div> */}
             </div>
           );
         }}

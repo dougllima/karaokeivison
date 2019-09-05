@@ -14,6 +14,12 @@ import AppContext from "./../../lib/appContext";
 import { LoginFunc } from "../../service/authService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+const login = {
+  Facebook: "Facebook",
+  Email: "Email",
+  Anonymously: "Anonymously"
+};
+
 const styles = {
   root: {
     flexGrow: 1
@@ -53,8 +59,8 @@ class Header extends Component {
     this.setState(state);
   };
 
-  loginFacebook = callback => {
-    LoginFunc(e => callback(e), e => console.log(e));
+  login = (method, callback) => {
+    LoginFunc(method, e => callback(e), e => console.log(e));
   };
 
   render() {
@@ -122,8 +128,8 @@ class Header extends Component {
         <Button
           color="inherit"
           onClick={e => this.handleClickMenu(e, "menuProfile")}
-        > 
-          {user.displayName}
+        >
+          {user.displayName || "Teste"}
         </Button>
         <Menu
           id="profile-menu"
@@ -167,7 +173,7 @@ class Header extends Component {
         >
           <MenuItem
             onClick={() =>
-              this.loginFacebook(e => {
+              this.login(login.Facebook, e => {
                 this.handleCloseMenu(null, "menuLogin");
                 setUser(e);
               })
@@ -175,6 +181,26 @@ class Header extends Component {
           >
             <FontAwesomeIcon icon={["fab", "facebook-square"]} />
             &nbsp; Login com Facebook
+          </MenuItem>
+          <MenuItem
+            onClick={() =>
+              this.login(login.Email, e => {
+                this.handleCloseMenu(null, "menuLogin");
+                setUser(e);
+              })
+            }
+          >
+            Login com Email
+          </MenuItem>
+          <MenuItem
+            onClick={() =>
+              this.login(login.Anonymously, e => {
+                this.handleCloseMenu(null, "menuLogin");
+                setUser(e);
+              })
+            }
+          >
+            Anonimo
           </MenuItem>
         </Menu>
       </div>
