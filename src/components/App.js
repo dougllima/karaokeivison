@@ -24,8 +24,7 @@ class App extends Component {
   constructor(prop) {
     super(prop);
 
-    if (!localStorage.getItem("userTheme"))
-      localStorage.setItem("userTheme", JSON.stringify(defaultTheme));
+    if (!localStorage.getItem("userTheme")) localStorage.setItem("userTheme", JSON.stringify(defaultTheme));
   }
   render() {
     return (

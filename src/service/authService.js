@@ -12,11 +12,7 @@ export function LoginFunc(method, callback, callbackError) {
     firebase
       .auth()
       .signInAnonymously()
-      .then(result => {
-        var user = result.user;
-        console.log(user);
-        callback(user);
-      })
+      .then(result => handleLogin(method, result))
       .catch(function(error) {
         console.log(error);
       });
@@ -24,14 +20,7 @@ export function LoginFunc(method, callback, callbackError) {
     firebase
       .auth()
       .signInWithPopup(providers[method])
-      .then(function(result) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        console.log(user);
-        callback(user);
-      })
+      .then(result => handleLogin(method, result))
       .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -43,3 +32,14 @@ export function LoginFunc(method, callback, callbackError) {
         callbackError({ errorCode, errorMessage, email, credential });
       });
 }
+
+const handleLogin = (method, result) => {
+  if (method != "Anonymously")
+    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    var token = result.credential.accessToken;
+
+  // The signed-in user info.
+  var user = result.user;
+  console.log(user);
+  callback(user);
+};
