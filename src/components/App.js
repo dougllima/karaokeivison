@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import { CssBaseline } from "@material-ui/core";
 import { withTheme } from "@material-ui/core/styles";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
@@ -34,7 +33,8 @@ class App extends Component {
   constructor(prop) {
     super(prop);
 
-    if (!localStorage.getItem("userTheme")) localStorage.setItem("userTheme", JSON.stringify(defaultTheme));
+    if (!localStorage.getItem("userTheme"))
+      localStorage.setItem("userTheme", JSON.stringify(defaultTheme));
   }
   render() {
     return (
