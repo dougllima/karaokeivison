@@ -1,31 +1,36 @@
 import React, { Component } from "react";
-import { TwitterPicker, GithubPicker, CirclePicker } from "react-color";
-import { withStyles } from "@material-ui/core/styles";
 import * as Themes from "../../lib/themes";
 import AppContext from "../../lib/appContext";
-import Button from "@material-ui/core/Button";
-import SaveIcon from "@material-ui/icons/Save";
-import { Grid, Paper } from "@material-ui/core";
-import ToggleButton, { ToggleButtonGroup } from "@material-ui/lab/ToggleButton";
 
+import { Grid, Paper, Button } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+
+import SaveIcon from "@material-ui/icons/Save";
 import LightBulb from "./../layout/LightBulb";
 import LightBulbOn from "./../layout/LightBulbOn";
 
+import { TwitterPicker, GithubPicker, CirclePicker } from "react-color";
+
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing(1)
   },
   input: {
     display: "none"
   },
   toggleContainer: {
     height: 56,
-    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+    padding: `${theme.spacing(1, 2)}`,
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
-    margin: `${theme.spacing.unit}px 0`,
-    background: theme.palette.background.default
+    margin: `${theme.spacing(1)} 0`
+  },
+  pickerContainer: {
+    height: "100%"
   }
 });
 
@@ -89,12 +94,12 @@ class ThemePicker extends Component {
           console.log(value);
           const { user, userTheme, setTheme, saveTheme } = value;
           return (
-            <Grid container spacing={32}>
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={4}>
+                <Paper className={classes.pickerContainer}>
                   <TwitterPicker
                     triangle="hide"
-                    width="204px"
+                    width="100%"
                     colors={Themes.getColors()}
                     onChange={(color, event) =>
                       this.changeTheme(color, "primary", setTheme)
@@ -104,7 +109,7 @@ class ThemePicker extends Component {
                   <br />
                   <TwitterPicker
                     triangle="hide"
-                    width="204px"
+                    width="100%"
                     colors={Themes.getColors()}
                     onChange={(color, event) =>
                       this.changeTheme(color, "secondary", setTheme)
@@ -113,10 +118,10 @@ class ThemePicker extends Component {
                   />
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper>
+              <Grid item xs={12} sm={4}>
+                <Paper className={classes.pickerContainer}>
                   <CirclePicker
-                    width="210px"
+                    width="100%"
                     colors={Themes.getColors()}
                     onChange={(color, event) =>
                       this.changeTheme(color, "primary", setTheme)
@@ -125,7 +130,7 @@ class ThemePicker extends Component {
                   />
                   <hr />
                   <CirclePicker
-                    width="210px"
+                    width="100%"
                     colors={Themes.getColors()}
                     onChange={(color, event) =>
                       this.changeTheme(color, "secondary", setTheme)
@@ -134,9 +139,10 @@ class ThemePicker extends Component {
                   />
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper>
+              <Grid item xs={12} sm={4}>
+                <Paper className={classes.pickerContainer}>
                   <GithubPicker
+                    width="100%"
                     triangle="hide"
                     colors={Themes.getColors()}
                     onChange={(color, event) =>
@@ -146,6 +152,7 @@ class ThemePicker extends Component {
                   />
                   <br />
                   <GithubPicker
+                    width="100%"
                     triangle="hide"
                     colors={Themes.getColors()}
                     onChange={(color, event) =>
@@ -155,36 +162,34 @@ class ThemePicker extends Component {
                   />
                 </Paper>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <Paper>
-                  <div className={classes.toggleContainer}>
-                    <ToggleButtonGroup
-                      value={userTheme.palette.type}
-                      exclusive
-                      color="primary"
-                      onChange={value =>
-                        this.changeTheme(value, "type", setTheme)
-                      }
-                    >
-                      <ToggleButton value="dark">
-                        <LightBulb type={userTheme.palette.type} />
-                      </ToggleButton>
-                      <ToggleButton value="light">
-                        <LightBulbOn type={userTheme.palette.type} />
-                      </ToggleButton>
-                    </ToggleButtonGroup>
-                  </div>
-                  <Button
-                    color="secondary"
-                    variant="raised"
-                    onClick={() =>
-                      this.saveThemeMiddleware(user, userTheme, saveTheme)
+              <Grid item xs={12}>
+                <div className={classes.toggleContainer}>
+                  <ToggleButtonGroup
+                    value={userTheme.palette.type}
+                    exclusive
+                    color="primary"
+                    onChange={value =>
+                      this.changeTheme(value, "type", setTheme)
                     }
                   >
-                    <SaveIcon />
-                    Salvar Mudanças
-                  </Button>
-                </Paper>
+                    <ToggleButton value="dark">
+                      <LightBulb type={userTheme.palette.type} />
+                    </ToggleButton>
+                    <ToggleButton value="light">
+                      <LightBulbOn type={userTheme.palette.type} />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </div>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={() =>
+                    this.saveThemeMiddleware(user, userTheme, saveTheme)
+                  }
+                >
+                  <SaveIcon />
+                  Salvar Mudanças
+                </Button>
               </Grid>
             </Grid>
           );

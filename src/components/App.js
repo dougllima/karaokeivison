@@ -1,12 +1,17 @@
 import React, { Component } from "react";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+import { CssBaseline } from "@material-ui/core";
 import { withTheme } from "@material-ui/core/styles";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import AppProvider from "./AppProvider";
-import AppContext from "./..//lib/appContext";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
 import * as colors from "@material-ui/core/colors";
 import { CssBaseline } from "@material-ui/core";
+
+import AppProvider from "./AppProvider";
+import AppContext from "./../lib/appContext";
 
 import Root from "./Root";
 
@@ -50,4 +55,4 @@ class App extends Component {
     );
   }
 }
-export default withTheme(theme)(App);
+export default withTheme(App);

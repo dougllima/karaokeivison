@@ -7,16 +7,17 @@ const search = async params => {
       baseURL: "https://www.googleapis.com/youtube/v3/",
       params: {
         part: "snippet",
-        maxResults: 5,
+        maxResults: 10,
         key: KEY
       }
     })
     .get("/search", {
       params: {
         part: "snippet",
-        maxResults: 5,
+        maxResults: 10,
         key: KEY,
-        params
+        type: "videos",
+        ...params
       }
     });
 };
