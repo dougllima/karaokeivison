@@ -15,7 +15,7 @@ const getTheme = colorHex => {
   for (const key in materialColors) {
     if (materialColors.hasOwnProperty(key)) {
       const element = materialColors[key];
-      if (element[500] == colorHex) return element;
+      if (element[500] === colorHex) return element;
     }
   }
 };

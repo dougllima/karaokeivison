@@ -76,7 +76,7 @@ class Header extends Component {
                   {this.getMainMenu(classes)}
                   <Typography
                     color="inherit"
-                    variant="title"
+                    variant="h6"
                     className={classes.flex}
                   >
                     {this.props.title}
