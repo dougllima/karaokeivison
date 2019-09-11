@@ -6,18 +6,23 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import AppProvider from "./AppProvider";
 import AppContext from "./..//lib/appContext";
 import * as colors from "@material-ui/core/colors";
+import { CssBaseline } from "@material-ui/core";
 
 import Root from "./Root";
 
 import "typeface-roboto";
 
 library.add(fab);
+
 var theme = {};
 var defaultTheme = {
   palette: {
     primary: colors.lightBlue,
     secondary: colors.amber,
-    type: "dark"
+    type: "dark",
+    background: {
+      default: "#333"
+    }
   }
 };
 class App extends Component {
@@ -35,6 +40,7 @@ class App extends Component {
             theme = createMuiTheme(userTheme ? userTheme : defaultTheme);
             return (
               <MuiThemeProvider theme={theme}>
+                <CssBaseline />
                 <Root />
               </MuiThemeProvider>
             );

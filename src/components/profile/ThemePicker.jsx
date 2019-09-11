@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { TwitterPicker } from "react-color";
+import { TwitterPicker, GithubPicker, CirclePicker } from "react-color";
 import { withStyles } from "@material-ui/core/styles";
 import * as Themes from "../../lib/themes";
 import AppContext from "../../lib/appContext";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-// import ToggleButton, { ToggleButtonGroup } from "@material-ui/lab/ToggleButton";
+import { Grid, Paper } from "@material-ui/core";
+import ToggleButton, { ToggleButtonGroup } from "@material-ui/lab/ToggleButton";
 
 import LightBulb from "./../layout/LightBulb";
 import LightBulbOn from "./../layout/LightBulbOn";
@@ -29,6 +30,14 @@ const styles = theme => ({
 });
 
 class ThemePicker extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      primary: "",
+      secondary: ""
+    };
+  }
   changeTheme = (parammeter, name, setTheme) => {
     var theme = JSON.parse(localStorage.getItem("userTheme"));
 
@@ -38,9 +47,11 @@ class ThemePicker extends Component {
 
     switch (name) {
       case "primary":
+        this.setState({ primary: parammeter.hex });
         primary = Themes.getTheme(parammeter.hex);
         break;
       case "secondary":
+        this.setState({ secondary: parammeter.hex });
         secondary = Themes.getTheme(parammeter.hex);
         break;
       case "type":
@@ -54,11 +65,11 @@ class ThemePicker extends Component {
       ...theme,
       palette: {
         primary: primary,
-        secondary: secondary
-        // type: type,
-        // background: {
-        //   default: this.type === "light" ? "#000" : "#fff"
-        // }
+        secondary: secondary,
+        type: type,
+        background: {
+          default: type === "light" ? "#fff" : "#333"
+        }
       }
     };
 
@@ -66,11 +77,7 @@ class ThemePicker extends Component {
   };
 
   saveThemeMiddleware = (user, theme, saveTheme) => {
-    var userTheme = {
-      user: user.uid,
-      theme
-    };
-    saveTheme(userTheme);
+    saveTheme(theme);
   };
 
   render() {
@@ -79,51 +86,107 @@ class ThemePicker extends Component {
     return (
       <AppContext.Consumer>
         {value => {
+          console.log(value);
           const { user, userTheme, setTheme, saveTheme } = value;
           return (
-            <div>
-              <TwitterPicker
-                triangle="hide"
-                width="204px"
-                colors={Themes.getColors()}
-                onChange={(color, event) =>
-                  this.changeTheme(color, "primary", setTheme)
-                }
-              />
-              <TwitterPicker
-                triangle="hide"
-                width="204px"
-                colors={Themes.getColors()}
-                onChange={(color, event) =>
-                  this.changeTheme(color, "secondary", setTheme)
-                }
-              />
-              <Button
-                color="secondary"
-                variant="raised"
-                onClick={() =>
-                  this.saveThemeMiddleware(user, userTheme, saveTheme)
-                }
-              >
-                <SaveIcon />
-                Salvar Mudanças
-              </Button>
-              {/* <div className={classes.toggleContainer}>
-                <ToggleButtonGroup
-                  value={userTheme.palette.type}
-                  exclusive
-                  color="primary"
-                  onChange={value => this.changeTheme(value, "type", setTheme)}
-                >
-                  <ToggleButton value="dark">
-                    <LightBulb type={userTheme.palette.type} />
-                  </ToggleButton>
-                  <ToggleButton value="light">
-                    <LightBulbOn type={userTheme.palette.type} />
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </div> */}
-            </div>
+            <Grid container spacing={32}>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper>
+                  <TwitterPicker
+                    triangle="hide"
+                    width="204px"
+                    colors={Themes.getColors()}
+                    onChange={(color, event) =>
+                      this.changeTheme(color, "primary", setTheme)
+                    }
+                    color={this.state.primary}
+                  />
+                  <br />
+                  <TwitterPicker
+                    triangle="hide"
+                    width="204px"
+                    colors={Themes.getColors()}
+                    onChange={(color, event) =>
+                      this.changeTheme(color, "secondary", setTheme)
+                    }
+                    color={this.state.secondary}
+                  />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper>
+                  <CirclePicker
+                    width="210px"
+                    colors={Themes.getColors()}
+                    onChange={(color, event) =>
+                      this.changeTheme(color, "primary", setTheme)
+                    }
+                    color={this.state.primary}
+                  />
+                  <hr />
+                  <CirclePicker
+                    width="210px"
+                    colors={Themes.getColors()}
+                    onChange={(color, event) =>
+                      this.changeTheme(color, "secondary", setTheme)
+                    }
+                    color={this.state.secondary}
+                  />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper>
+                  <GithubPicker
+                    triangle="hide"
+                    colors={Themes.getColors()}
+                    onChange={(color, event) =>
+                      this.changeTheme(color, "primary", setTheme)
+                    }
+                    color={this.state.primary}
+                  />
+                  <br />
+                  <GithubPicker
+                    triangle="hide"
+                    colors={Themes.getColors()}
+                    onChange={(color, event) =>
+                      this.changeTheme(color, "secondary", setTheme)
+                    }
+                    color={this.state.secondary}
+                  />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Paper>
+                  <div className={classes.toggleContainer}>
+                    <ToggleButtonGroup
+                      value={userTheme.palette.type}
+                      exclusive
+                      color="primary"
+                      onChange={value =>
+                        this.changeTheme(value, "type", setTheme)
+                      }
+                    >
+                      <ToggleButton value="dark">
+                        <LightBulb type={userTheme.palette.type} />
+                      </ToggleButton>
+                      <ToggleButton value="light">
+                        <LightBulbOn type={userTheme.palette.type} />
+                      </ToggleButton>
+                    </ToggleButtonGroup>
+                  </div>
+                  <Button
+                    color="secondary"
+                    variant="raised"
+                    onClick={() =>
+                      this.saveThemeMiddleware(user, userTheme, saveTheme)
+                    }
+                  >
+                    <SaveIcon />
+                    Salvar Mudanças
+                  </Button>
+                </Paper>
+              </Grid>
+            </Grid>
           );
         }}
       </AppContext.Consumer>
