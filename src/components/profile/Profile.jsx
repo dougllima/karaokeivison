@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AppContext from "../../lib/appContext";
-import User from "../User";
+import User from "./User";
 import ThemePicker from "./ThemePicker";
 
 class Profile extends Component {
