@@ -91,6 +91,7 @@ class ThemePicker extends Component {
     return (
       <AppContext.Consumer>
         {value => {
+          console.log(value);
           const { user, userTheme, setTheme, saveTheme } = value;
           return (
             <Grid container spacing={2}>

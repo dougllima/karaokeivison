@@ -8,6 +8,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 import * as colors from "@material-ui/core/colors";
+import { CssBaseline } from "@material-ui/core";
 
 import AppProvider from "./AppProvider";
 import AppContext from "./../lib/appContext";
@@ -33,8 +34,7 @@ class App extends Component {
   constructor(prop) {
     super(prop);
 
-    if (!localStorage.getItem("userTheme"))
-      localStorage.setItem("userTheme", JSON.stringify(defaultTheme));
+    if (!localStorage.getItem("userTheme")) localStorage.setItem("userTheme", JSON.stringify(defaultTheme));
   }
   render() {
     return (
