@@ -5,12 +5,12 @@ import { MenuItem, Menu, Button } from "@material-ui/core";
 
 const ProfileMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { user, logout } = useContext(UserContext);
+  const { profile, logout } = useContext(UserContext);
 
   return (
     <React.Fragment>
       <Button color="inherit" onClick={e => setAnchorEl(e.currentTarget)}>
-        {user.displayName || "Teste"}
+        {profile && profile.displayName ? profile.displayName : "Teste"}
       </Button>
       <Menu
         id="profile-menu"

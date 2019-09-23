@@ -7,7 +7,12 @@ export const getProfile = user => {
     .get()
     .then(snapshot => {
       if (snapshot.exists) return snapshot.data();
-      else saveProfile({ id: user.uid });
+      else
+        saveProfile({
+          id: user.uid,
+          displayName: user.displayName,
+          email: user.email
+        });
     })
     .catch(error => {
       console.log(error);

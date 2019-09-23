@@ -25,6 +25,7 @@ class Header extends Component {
   render() {
     const { classes } = this.props;
     const { user } = this.context;
+    
     return (
       <div className={classes.root}>
         <AppBar position="static">

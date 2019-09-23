@@ -164,7 +164,7 @@ class ThemePicker extends Component {
           <Button
             color="secondary"
             variant="contained"
-            onClick={() => saveTheme(theme)}
+            onClick={() => saveTheme()}
           >
             <SaveIcon />
             Salvar Mudanças
