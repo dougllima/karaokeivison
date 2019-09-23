@@ -46,7 +46,7 @@ const LoginMenu = () => {
               callbacks: {
                 signInSuccessWithAuthResult: function(authResult, redirectUrl) {
                   var user = authResult.user;
-                  console.log(user);
+
                   // var credential = authResult.credential;
                   // var isNewUser = authResult.additionalUserInfo.isNewUser;
                   // var providerId = authResult.additionalUserInfo.providerId;
