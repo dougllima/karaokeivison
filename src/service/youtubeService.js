@@ -16,7 +16,7 @@ const search = async params => {
         part: "snippet",
         maxResults: 10,
         key: KEY,
-        type: "videos",
+        type: "video",
         ...params
       }
     });
