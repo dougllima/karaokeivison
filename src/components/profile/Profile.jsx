@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AppContext from "../../lib/appContext";
+import { UserContext } from "../contexts/UserContext";
 import User from "./User";
 import ThemePicker from "./ThemePicker";
 
@@ -12,7 +12,7 @@ class Profile extends Component {
 
   render() {
     return (
-      <AppContext.Consumer>
+      <UserContext.Consumer>
         {value => {
           const { user } = value;
           return (
@@ -22,7 +22,7 @@ class Profile extends Component {
             </div>
           );
         }}
-      </AppContext.Consumer>
+      </UserContext.Consumer>
     );
   }
 }
