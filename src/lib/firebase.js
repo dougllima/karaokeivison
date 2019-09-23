@@ -1,4 +1,6 @@
 import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
 var config = {
   apiKey: "AIzaSyA0e_TzAHGSCrfOKsifN4npgLHkdUmT0PM",
@@ -9,4 +11,9 @@ var config = {
   messagingSenderId: "989829462430"
 };
 
-export const firebaseImpl = firebase.initializeApp(config);
+let firebaseImpl;
+
+if (!firebase.apps.length) firebaseImpl = firebase.initializeApp(config);
+
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();

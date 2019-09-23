@@ -1,211 +1,45 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
+import { Typography, Toolbar, AppBar } from "@material-ui/core";
+
+import { UserContext } from "./contexts/UserContext";
 import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { Link } from "react-router-dom";
-import AppContext from "./../lib/appContext";
-import { LoginFunc } from "../service/authService";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const login = {
-  Facebook: "Facebook",
-  Email: "Email",
-  Anonymously: "Anonymously"
-};
+import MainMenu from "./MainMenu";
+import LoginMenu from "./LoginMenu";
+import ProfileMenu from "./ProfileMenu";
 
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1
   },
   flex: {
     flexGrow: 1
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  },
-  link: {
-    textDecoration: "none"
   }
-};
+});
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      menuNav: false,
-      menuProfile: false,
-      menuLogin: false
-    };
-  }
-
-  handleClickMenu = (event, name) => {
-    var state = this.state;
-    state[name] = event.currentTarget;
-    this.setState(state);
-  };
-
-  handleCloseMenu = (event, name) => {
-    var state = this.state;
-    state[name] = null;
-    this.setState(state);
-  };
-
-  login = (method, callback) => {
-    LoginFunc(method, e => callback(e), e => console.log(e));
-  };
+  static contextType = UserContext;
 
   render() {
     const { classes } = this.props;
+    const { user } = this.context;
+
     return (
-      <AppContext.Consumer>
-        {value => {
-          const { user, setUser } = value;
-          return (
-            <div className={classes.root}>
-              <AppBar position="static">
-                <Toolbar>
-                  {this.getMainMenu(classes)}
-                  <Typography
-                    color="inherit"
-                    variant="h6"
-                    className={classes.flex}
-                  >
-                    {this.props.title}
-                  </Typography>
-                  {user
-                    ? this.getProfileMenu(user, setUser)
-                    : this.getLoginMenu(user, setUser)}
-                </Toolbar>
-              </AppBar>
-            </div>
-          );
-        }}
-      </AppContext.Consumer>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <MainMenu />
+            <Typography color="inherit" variant="h6" className={classes.flex}>
+              {this.props.title}
+            </Typography>
+            {user ? <ProfileMenu /> : <LoginMenu />}
+          </Toolbar>
+        </AppBar>
+      </div>
     );
   }
-
-  getMainMenu = classes => {
-    const { menuNav } = this.state;
-    return (
-      <div>
-        <IconButton
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="Menu"
-          aria-owns={menuNav ? "simple-menu" : null}
-          aria-haspopup="true"
-          onClick={e => this.handleClickMenu(e, "menuNav")}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Menu
-          id="simple-menu"
-          open={Boolean(menuNav)}
-          onClose={e => this.handleCloseMenu(e, "menuNav")}
-        >
-          <Link to="/">
-            <MenuItem onClick={e => this.handleCloseMenu(e, "menuNav")}>
-              Página Inicial
-            </MenuItem>
-          </Link>
-        </Menu>
-      </div>
-    );
-  };
-  getProfileMenu = (user, setUser) => {
-    const { menuProfile } = this.state;
-    return (
-      <div>
-        <Button
-          color="inherit"
-          onClick={e => this.handleClickMenu(e, "menuProfile")}
-        >
-          {user.displayName || "Teste"}
-        </Button>
-        <Menu
-          id="profile-menu"
-          anchorEl={menuProfile}
-          open={Boolean(menuProfile)}
-          onClose={e => this.handleCloseMenu(e, "menuProfile")}
-        >
-          <Link to="/profile">
-            <MenuItem onClick={e => this.handleCloseMenu(e, "menuProfile")}>
-              Perfil
-            </MenuItem>
-          </Link>
-          <MenuItem
-            onClick={e => {
-              this.handleCloseMenu(e, "menuProfile");
-              setUser(null);
-            }}
-          >
-            Sair
-          </MenuItem>
-        </Menu>
-      </div>
-    );
-  };
-
-  getLoginMenu = (user, setUser) => {
-    const { menuLogin } = this.state;
-    return (
-      <div>
-        <Button
-          color="inherit"
-          onClick={e => this.handleClickMenu(e, "menuLogin")}
-        >
-          Login
-        </Button>
-        <Menu
-          id="simple-menu"
-          anchorEl={menuLogin}
-          open={Boolean(menuLogin)}
-          onClose={e => this.handleCloseMenu(e, "menuLogin")}
-        >
-          <MenuItem
-            onClick={() =>
-              this.login(login.Facebook, e => {
-                this.handleCloseMenu(null, "menuLogin");
-                setUser(e);
-              })
-            }
-          >
-            <FontAwesomeIcon icon={["fab", "facebook-square"]} />
-            &nbsp; Login com Facebook
-          </MenuItem>
-          <MenuItem
-            onClick={() =>
-              this.login(login.Email, e => {
-                this.handleCloseMenu(null, "menuLogin");
-                setUser(e);
-              })
-            }
-          >
-            Login com Email
-          </MenuItem>
-          <MenuItem
-            onClick={() =>
-              this.login(login.Anonymously, e => {
-                this.handleCloseMenu(null, "menuLogin");
-                setUser(e);
-              })
-            }
-          >
-            Anonimo
-          </MenuItem>
-        </Menu>
-      </div>
-    );
-  };
 }
 
 Header.propTypes = {

@@ -9,8 +9,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import * as colors from "@material-ui/core/colors";
 import { CssBaseline } from "@material-ui/core";
 
-import AppProvider from "./AppProvider";
-import AppContext from "./../lib/appContext";
+import { StyleProvider, StyleContext } from "./contexts/StyleContext";
+import { UserProvider } from "./contexts/UserContext";
 
 import Root from "./Root";
 
@@ -18,40 +18,24 @@ import "typeface-roboto";
 
 library.add(fab);
 
-var theme = {};
-var defaultTheme = {
-  palette: {
-    primary: colors.lightBlue,
-    secondary: colors.amber,
-    type: "dark",
-    background: {
-      default: "#333"
-    }
-  }
-};
 class App extends Component {
-  constructor(prop) {
-    super(prop);
-
-    if (!localStorage.getItem("userTheme"))
-      localStorage.setItem("userTheme", JSON.stringify(defaultTheme));
-  }
   render() {
     return (
-      <AppProvider>
-        <AppContext.Consumer>
-          {value => {
-            var { userTheme } = value;
-            theme = createMuiTheme(userTheme ? userTheme : defaultTheme);
-            return (
-              <MuiThemeProvider theme={theme}>
-                <CssBaseline />
-                <Root />
-              </MuiThemeProvider>
-            );
-          }}
-        </AppContext.Consumer>
-      </AppProvider>
+      <UserProvider>
+        <StyleProvider>
+          <StyleContext.Consumer>
+            {value => {
+              var { theme } = value;
+              return (
+                <MuiThemeProvider theme={createMuiTheme(theme)}>
+                  <CssBaseline />
+                  <Root />
+                </MuiThemeProvider>
+              );
+            }}
+          </StyleContext.Consumer>
+        </StyleProvider>
+      </UserProvider>
     );
   }
 }
