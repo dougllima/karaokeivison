@@ -9,9 +9,10 @@ import {
 import { Search } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
 
-import youtube from "./../service/youtubeService";
-import VideoDetail from "./VideoDetail";
+import RoomList from "./RoomList";
 import VideoItem from "./VideoItem";
+import VideoDetail from "./VideoDetail";
+import youtube from "./../service/youtubeService";
 
 const styles = theme => ({
   paper: {
@@ -32,6 +33,11 @@ class Home extends Component {
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleKeyPress = event => {
+    if (event.key !== "Enter") return;
+    this.search();
   };
 
   handleVideoSelect = video => {
@@ -90,6 +96,9 @@ class Home extends Component {
           <Grid item xs={12} sm={8}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
+                <RoomList />
+              </Grid>
+              <Grid item xs={12}>
                 <TextField
                   id="q"
                   name="q"
@@ -97,6 +106,7 @@ class Home extends Component {
                   variant="outlined"
                   placeholder="Nome do video"
                   onChange={this.handleChange}
+                  onKeyPress={this.handleKeyPress}
                   InputLabelProps={{
                     shrink: true
                   }}
