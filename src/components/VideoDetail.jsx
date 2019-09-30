@@ -1,4 +1,5 @@
 import React from "react";
+import YouTube from "react-youtube";
 import DoneIcon from "@material-ui/icons/Done";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@material-ui/core/styles";
@@ -31,7 +32,11 @@ const VideoDetail = ({ video, handleVideoSelect }) => {
     return <div>Loading ...</div>;
   }
 
-  const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;
+  const onReady = event => {
+    // access to player in all event handlers via event.target
+    // event.target.pauseVideo();
+  };
+
   return (
     <React.Fragment>
       <Grid spacing={2} container>
@@ -52,11 +57,16 @@ const VideoDetail = ({ video, handleVideoSelect }) => {
           </Fab>
         </Grid>
         <Grid item xs={12}>
-          <iframe
+          <YouTube
+            videoId={video.id.videoId}
             className={classes.player}
-            src={videoSrc}
-            allowFullScreen={false}
-            title="Video player"
+            onReady={onReady}
+            opts={{
+              playerVars: {
+                autoplay: 1,
+                playsinline: 1
+              }
+            }}
           />
         </Grid>
         <Grid item xs={12}>

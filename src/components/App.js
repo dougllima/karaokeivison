@@ -1,41 +1,53 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { withTheme } from "@material-ui/core/styles";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import PubNub from 'pubnub';
+import { PubNubProvider } from 'pubnub-react';
+import { RoomProvider } from './contexts/RoomContext';
 
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { withTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import * as colors from "@material-ui/core/colors";
-import { CssBaseline } from "@material-ui/core";
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
-import { StyleProvider, StyleContext } from "./contexts/StyleContext";
-import { UserProvider } from "./contexts/UserContext";
+import { CssBaseline } from '@material-ui/core';
 
-import Root from "./Root";
+import { StyleProvider, StyleContext } from './contexts/StyleContext';
+import { UserProvider } from './contexts/UserContext';
 
-import "typeface-roboto";
+import Root from './Root';
+
+import 'typeface-roboto';
 
 library.add(fab);
+
+const pubnubClient = new PubNub({
+  publishKey: 'pub-c-5ba4f17c-e63f-48ef-a762-78672617aaca',
+  subscribeKey: 'sub-c-61929616-e13d-11e9-875e-e6d5a3474134'
+});
 
 class App extends Component {
   render() {
     return (
-      <UserProvider>
-        <StyleProvider>
-          <StyleContext.Consumer>
-            {value => {
-              var { theme } = value;
-              return (
-                <MuiThemeProvider theme={createMuiTheme(theme)}>
-                  <CssBaseline />
-                  <Root />
-                </MuiThemeProvider>
-              );
-            }}
-          </StyleContext.Consumer>
-        </StyleProvider>
-      </UserProvider>
+      <PubNubProvider client={pubnubClient}>
+        <UserProvider>
+          <RoomProvider>
+            <StyleProvider>
+              <StyleContext.Consumer>
+                {value => {
+                  var { theme } = value;
+                  return (
+                    <MuiThemeProvider theme={createMuiTheme(theme)}>
+                      <CssBaseline />
+                      <Root />
+                    </MuiThemeProvider>
+                  );
+                }}
+              </StyleContext.Consumer>
+            </StyleProvider>
+          </RoomProvider>
+        </UserProvider>
+      </PubNubProvider>
     );
   }
 }
