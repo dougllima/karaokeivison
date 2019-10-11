@@ -1,16 +1,19 @@
-import React, { useState, useContext } from "react";
-import { UserContext } from "./contexts/UserContext";
-import { Link } from "react-router-dom";
-import { MenuItem, Menu, Button } from "@material-ui/core";
+import React, { useState, useContext } from 'react';
+
+import { Link } from 'react-router-dom';
+
+import { MenuItem, Menu, Button } from '@material-ui/core';
+
+import { UserContext } from './contexts/UserContext';
 
 const ProfileMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { profile, logout } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
 
   return (
     <React.Fragment>
       <Button color="inherit" onClick={e => setAnchorEl(e.currentTarget)}>
-        {profile && profile.displayName ? profile.displayName : "Teste"}
+        {user.displayName || 'Teste'}
       </Button>
       <Menu
         id="profile-menu"

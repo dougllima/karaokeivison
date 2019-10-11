@@ -1,178 +1,148 @@
-import React, { Component } from "react";
-import * as Themes from "../../lib/themes";
-import { StyleContext } from "../contexts/StyleContext";
+import React, { useContext, useState, useEffect } from 'react';
+import { StyleContext } from '../contexts/StyleContext';
 
-import { Grid, Paper, Button } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import {
+  Grid,
+  Button,
+  Select,
+  FormControl,
+  InputLabel
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-import ToggleButton from "@material-ui/lab/ToggleButton";
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
-import SaveIcon from "@material-ui/icons/Save";
-import LightBulb from "./../layout/LightBulb";
-import LightBulbOn from "./../layout/LightBulbOn";
+import ColorPicker from './ColorPicker';
+import LightBulb from './../layout/LightBulb';
+import SaveIcon from '@material-ui/icons/Save';
+import LightBulbOn from './../layout/LightBulbOn';
 
-import { TwitterPicker, GithubPicker, CirclePicker } from "react-color";
+const pickers = [
+  'BlockPicker',
+  'CirclePicker',
+  'CompactPicker',
+  'GithubPicker',
+  'TwitterPicker'
+];
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(1)
   },
   input: {
-    display: "none"
+    display: 'none'
   },
   toggleContainer: {
     height: 56,
     padding: `${theme.spacing(1, 2)}`,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     margin: `${theme.spacing(1)} 0`
   },
   pickerContainer: {
-    height: "100%"
+    height: '100%'
   }
-});
+}));
 
-class ThemePicker extends Component {
-  constructor(props) {
-    super(props);
+const ThemePicker = props => {
+  const classes = useStyles();
 
-    this.state = {
-      primary: "",
-      secondary: ""
-    };
-  }
+  const { theme, setTheme, saveTheme } = useContext(StyleContext);
 
-  static contextType = StyleContext;
+  const [type, setType] = useState(theme.palette.type);
+  const [picker, setPicker] = useState('TwitterPicker');
+  const [primary, setPrimary] = useState(theme.palette.primary.main);
+  const [secondary, setSecondary] = useState(theme.palette.secondary.main);
 
-  changeTheme = (parammeter, name) => {
-    const { theme, setTheme } = this.context;
-
-    var primary = theme.palette.primary;
-    var secondary = theme.palette.secondary;
-    var type = theme.palette.type;
-
-    switch (name) {
-      case "primary":
-        this.setState({ primary: parammeter.hex });
-        primary = Themes.getTheme(parammeter.hex);
-        break;
-      case "secondary":
-        this.setState({ secondary: parammeter.hex });
-        secondary = Themes.getTheme(parammeter.hex);
-        break;
-      case "type":
-        type = parammeter;
-        break;
-      default:
-        break;
-    }
-
-    let newTheme = {
+  useEffect(() => {
+    setTheme(theme => ({
       ...theme,
       palette: {
-        primary: primary,
-        secondary: secondary,
+        primary: { main: primary },
+        secondary: { main: secondary },
         type: type,
         background: {
-          default: type === "light" ? "#fff" : "#333"
+          default: type === 'light' ? '#fff' : '#333'
         }
       }
-    };
+    }));
+  }, [primary, secondary, type, setTheme]);
 
-    setTheme(newTheme);
-  };
-
-  render() {
-    const { theme, saveTheme } = this.context;
-    const { classes } = this.props;
-
-    return (
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
-          <Paper className={classes.pickerContainer}>
-            <TwitterPicker
-              triangle="hide"
-              width="100%"
-              colors={Themes.getColors()}
-              onChange={(color, event) => this.changeTheme(color, "primary")}
-              color={this.state.primary}
-            />
-            <br />
-            <TwitterPicker
-              triangle="hide"
-              width="100%"
-              colors={Themes.getColors()}
-              onChange={(color, event) => this.changeTheme(color, "secondary")}
-              color={this.state.secondary}
-            />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Paper className={classes.pickerContainer}>
-            <CirclePicker
-              width="100%"
-              colors={Themes.getColors()}
-              onChange={(color, event) => this.changeTheme(color, "primary")}
-              color={this.state.primary}
-            />
-            <hr />
-            <CirclePicker
-              width="100%"
-              colors={Themes.getColors()}
-              onChange={(color, event) => this.changeTheme(color, "secondary")}
-              color={this.state.secondary}
-            />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Paper className={classes.pickerContainer}>
-            <GithubPicker
-              width="100%"
-              triangle="hide"
-              colors={Themes.getColors()}
-              onChange={(color, event) => this.changeTheme(color, "primary")}
-              color={this.state.primary}
-            />
-            <br />
-            <GithubPicker
-              width="100%"
-              triangle="hide"
-              colors={Themes.getColors()}
-              onChange={(color, event) => this.changeTheme(color, "secondary")}
-              color={this.state.secondary}
-            />
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <div className={classes.toggleContainer}>
-            <ToggleButtonGroup
-              value={theme.palette.type}
-              exclusive
-              color="primary"
-              onChange={value => this.changeTheme(value, "type")}
-            >
-              <ToggleButton value="dark">
-                <LightBulb type={theme.palette.type} />
-              </ToggleButton>
-              <ToggleButton value="light">
-                <LightBulbOn type={theme.palette.type} />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </div>
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={() => saveTheme()}
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="outlined-age-simple">Picker</InputLabel>
+          <Select
+            native
+            value={picker}
+            onChange={e => setPicker(e.target.value)}
           >
-            <SaveIcon />
-            Salvar Mudanças
-          </Button>
+            {pickers.map(e => (
+              <option key={`picker-${e}`} value={e}>
+                {e.replace('Picker', '')}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item container xs={12}>
+        <Grid item xs={12} sm={6}>
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <ColorPicker
+              pickerName={picker}
+              onChange={setPrimary}
+              defaultColor={primary}
+              pickerProps={{
+                triangle: 'hide',
+                width: '100%'
+              }}
+            />
+          </React.Suspense>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <ColorPicker
+              pickerName={picker}
+              onChange={setSecondary}
+              defaultColor={secondary}
+              pickerProps={{
+                triangle: 'hide',
+                width: '100%'
+              }}
+            />
+          </React.Suspense>
         </Grid>
       </Grid>
-    );
-  }
-}
+      <Grid item xs={12}>
+        <div className={classes.toggleContainer}>
+          <ToggleButtonGroup
+            value={type}
+            exclusive
+            color="primary"
+            onChange={setType}
+          >
+            <ToggleButton value="dark">
+              <LightBulb type={type} />
+            </ToggleButton>
+            <ToggleButton value="light">
+              <LightBulbOn type={type} />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </div>
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={() => saveTheme(theme)}
+        >
+          <SaveIcon />
+          Salvar Mudanças
+        </Button>
+      </Grid>
+    </Grid>
+  );
+};
 
-export default withStyles(styles)(ThemePicker);
+export default ThemePicker;

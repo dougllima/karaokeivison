@@ -1,42 +1,44 @@
-import React, { Component } from "react";
+import React from 'react';
 
-import { withTheme } from "@material-ui/core/styles";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { CssBaseline } from '@material-ui/core';
+import { withTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
-import * as colors from "@material-ui/core/colors";
-import { CssBaseline } from "@material-ui/core";
+import { RoomProvider } from './contexts/RoomContext';
+import { UserProvider } from './contexts/UserContext';
+import { ChatProvider } from './contexts/ChatContext';
+import { StyleProvider, StyleContext } from './contexts/StyleContext';
 
-import { StyleProvider, StyleContext } from "./contexts/StyleContext";
-import { UserProvider } from "./contexts/UserContext";
+import Routes from './Routes';
 
-import Root from "./Root";
-
-import "typeface-roboto";
+import 'typeface-roboto';
 
 library.add(fab);
 
-class App extends Component {
-  render() {
-    return (
-      <UserProvider>
-        <StyleProvider>
-          <StyleContext.Consumer>
-            {value => {
-              var { theme } = value;
-              return (
-                <MuiThemeProvider theme={createMuiTheme(theme)}>
-                  <CssBaseline />
-                  <Root />
-                </MuiThemeProvider>
-              );
-            }}
-          </StyleContext.Consumer>
-        </StyleProvider>
-      </UserProvider>
-    );
-  }
-}
+const App = () => {
+  return (
+    <UserProvider>
+      <RoomProvider>
+        <ChatProvider>
+          <StyleProvider>
+            <StyleContext.Consumer>
+              {value => {
+                var { theme } = value;
+                return (
+                  <MuiThemeProvider theme={createMuiTheme(theme)}>
+                    <CssBaseline />
+                    <Routes />
+                  </MuiThemeProvider>
+                );
+              }}
+            </StyleContext.Consumer>
+          </StyleProvider>
+        </ChatProvider>
+      </RoomProvider>
+    </UserProvider>
+  );
+};
 export default withTheme(App);

@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
-import firebase from "firebase";
-import { getProfile, saveProfile } from "../../service/userService";
+import React, { useEffect } from 'react';
+
+import firebase from 'firebase';
+
+import { getProfile, saveProfile } from '../../service/userService';
 
 export const UserContext = React.createContext({});
 

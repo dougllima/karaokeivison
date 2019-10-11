@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import MenuIcon from "@material-ui/icons/Menu";
-import { makeStyles } from "@material-ui/core/styles";
-import { MenuItem, Menu, IconButton } from "@material-ui/core";
+import React, { useState } from 'react';
+
+import { Link } from 'react-router-dom';
+
+import MenuIcon from '@material-ui/icons/Menu';
+import { makeStyles } from '@material-ui/core/styles';
+import { MenuItem, Menu, IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -21,7 +23,7 @@ const MainMenu = props => {
         className={classes.menuButton}
         color="inherit"
         aria-label="Menu"
-        aria-owns={anchorEl ? "simple-menu" : null}
+        aria-owns={anchorEl ? 'simple-menu' : null}
         aria-haspopup="true"
         onClick={e => setAnchorEl(e.currentTarget)}
       >
@@ -35,6 +37,9 @@ const MainMenu = props => {
       >
         <Link to="/">
           <MenuItem onClick={() => setAnchorEl(null)}>Página Inicial</MenuItem>
+        </Link>
+        <Link to="/video">
+          <MenuItem onClick={() => setAnchorEl(null)}>Vídeos</MenuItem>
         </Link>
       </Menu>
     </React.Fragment>

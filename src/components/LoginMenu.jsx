@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Modal, Paper } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, Modal, Paper } from '@material-ui/core';
 
-import firebase from "firebase/app";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import firebase from 'firebase/app';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    position: "absolute",
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
     top: `50%`,
     left: `50%`,
-    transform: `translate(-50%, -50%)`
+    position: 'absolute',
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    transform: `translate(-50%, -50%)`,
+    backgroundColor: theme.palette.background.paper
   }
 }));
 
@@ -36,7 +36,7 @@ const LoginMenu = () => {
         <Paper className={classes.paper}>
           <StyledFirebaseAuth
             uiConfig={{
-              signInFlow: "popup",
+              signInFlow: 'popup',
               signInOptions: [
                 firebase.auth.EmailAuthProvider.PROVIDER_ID,
                 firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -45,8 +45,7 @@ const LoginMenu = () => {
               ],
               callbacks: {
                 signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-                  var user = authResult.user;
-
+                  // var user = authResult.user;
                   // var credential = authResult.credential;
                   // var isNewUser = authResult.additionalUserInfo.isNewUser;
                   // var providerId = authResult.additionalUserInfo.providerId;

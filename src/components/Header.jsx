@@ -1,49 +1,40 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from 'react';
 
-import { Typography, Toolbar, AppBar } from "@material-ui/core";
+import MainMenu from './MainMenu';
+import PropTypes from 'prop-types';
+import LoginMenu from './LoginMenu';
+import ProfileMenu from './ProfileMenu';
 
-import { UserContext } from "./contexts/UserContext";
-import { withStyles } from "@material-ui/core/styles";
+import { UserContext } from './contexts/UserContext';
+import { makeStyles } from '@material-ui/core/styles';
 
-import MainMenu from "./MainMenu";
-import LoginMenu from "./LoginMenu";
-import ProfileMenu from "./ProfileMenu";
+import { Typography, Toolbar, AppBar } from '@material-ui/core';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
   flex: {
     flexGrow: 1
   }
-});
+}));
 
-class Header extends Component {
-  static contextType = UserContext;
-
-  render() {
-    const { classes } = this.props;
-    const { user } = this.context;
-    
-    return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <MainMenu />
-            <Typography color="inherit" variant="h6" className={classes.flex}>
-              {this.props.title}
-            </Typography>
-            {user ? <ProfileMenu /> : <LoginMenu />}
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
-  }
-}
-
-Header.propTypes = {
-  classes: PropTypes.object.isRequired
+const Header = props => {
+  const classes = useStyles();
+  const { user } = useContext(UserContext);
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <MainMenu />
+          <Typography color="inherit" variant="h6" className={classes.flex}>
+            {props.title}
+          </Typography>
+          {user ? <ProfileMenu /> : <LoginMenu />}
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 };
 
-export default withStyles(styles)(Header);
+export default Header;
