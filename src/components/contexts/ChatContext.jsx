@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PubNub from 'pubnub';
 
 import { RoomContext } from './RoomContext';

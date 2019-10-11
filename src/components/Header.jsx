@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 
 import MainMenu from './MainMenu';
-import PropTypes from 'prop-types';
 import LoginMenu from './LoginMenu';
 import ProfileMenu from './ProfileMenu';
 

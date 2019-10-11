@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 
 import { Slider, Grid } from '@material-ui/core';
 
-import * as Theme from './../../lib/themes';
+import * as Theme from '../../lib/themes';
 
 const shades = [
   { label: '50', value: 0 },
@@ -43,7 +43,9 @@ const ColorPicker = ({ pickerName, pickerProps, onChange, defaultColor }) => {
 
   const Component = useMemo(() => {
     return React.lazy(() =>
-      import(`react-color`).then(module => ({ default: module[pickerName] }))
+      import(`react-color`).then(module => ({
+        default: module[pickerName]
+      }))
     );
   }, [pickerName]);
 

@@ -14,9 +14,9 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import ColorPicker from './ColorPicker';
-import LightBulb from './../layout/LightBulb';
+import LightBulb from '../layout/LightBulb';
 import SaveIcon from '@material-ui/icons/Save';
-import LightBulbOn from './../layout/LightBulbOn';
+import LightBulbOn from '../layout/LightBulbOn';
 
 const pickers = [
   'BlockPicker',

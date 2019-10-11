@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 export const RoomContext = React.createContext({});
 
@@ -10,7 +10,7 @@ export const RoomProvider = props => {
   const [messages, setMessages] = useState([]);
 
   return (
-    <RoomContext.Provider value={{ room, setRoom, messages }}>
+    <RoomContext.Provider value={{ room, setRoom, messages, setMessages }}>
       {props.children}
     </RoomContext.Provider>
   );

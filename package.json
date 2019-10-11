@@ -28,17 +28,48 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier": "prettier --write src/**/*.{js,jsx,css}"
   },
   "devDependencies": {
     "eslint-plugin-react": "7.14.3",
-    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
-    "@fortawesome/free-brands-svg-icons": "^5.2.0",
-    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
-    "@fortawesome/react-fontawesome": "0.1.0-11",
-    "@material-ui/core": "^1.4.2",
-    "@material-ui/icons": "^2.0.0",
-    "@material-ui/lab": "^1.0.0-alpha.10",
-    "react-color": "^2.14.1"
+    "husky": "^3.0.8",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,css}": [
+      "prettier --write",
+      "git add"
+    ],
+    "webpack.config.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "package.json": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
