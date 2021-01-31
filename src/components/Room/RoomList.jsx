@@ -6,7 +6,7 @@ import Room from './Room';
 import RoomItem from './RoomItem';
 
 import { listRooms } from './../../service/roomService';
-import { RoomContext } from './../contexts/RoomContext';
+import { RoomContext } from './../Contexts/RoomContext';
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);

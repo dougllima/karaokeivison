@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Grid, TextField } from '@material-ui/core';
 
 import { listRooms } from './../service/roomService';
-import { UserContext } from './contexts/UserContext';
+import { UserContext } from './Contexts/UserContext';
 
 const RoomList = props => {
   const [rooms, setRooms] = useState([]);

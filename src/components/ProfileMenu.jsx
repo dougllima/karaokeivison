@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { MenuItem, Menu, Button } from '@material-ui/core';
 
-import { UserContext } from './contexts/UserContext';
+import { UserContext } from './Contexts/UserContext';
 
 const ProfileMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -21,7 +21,7 @@ const ProfileMenu = () => {
         open={Boolean(anchorEl)}
         onClose={e => setAnchorEl(null)}
       >
-        <Link to="/profile">
+        <Link to="/Profile">
           <MenuItem onClick={e => setAnchorEl(null)}>Perfil</MenuItem>
         </Link>
         <MenuItem

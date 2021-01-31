@@ -14,7 +14,7 @@ const Routes = () => {
         <Header title="Teste" />
         <Route exact path="/" component={Home} />
         <Route path="/video" component={VideoPage} />
-        <Route path="/profile" component={ProfilePage} />
+        <Route path="/Profile" component={ProfilePage} />
       </React.Fragment>
     </Router>
   );

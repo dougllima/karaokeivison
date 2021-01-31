@@ -16,8 +16,8 @@ import ChatMessage from './ChatMessage';
 
 import SendIcon from '@material-ui/icons/Send';
 
-import { ChatContext } from './../../contexts/ChatContext';
-import { UserContext } from './../../contexts/UserContext';
+import { ChatContext } from './../../Contexts/ChatContext';
+import { UserContext } from './../../Contexts/UserContext';
 
 const useStyles = makeStyles(theme => ({
   card: {

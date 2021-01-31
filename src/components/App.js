@@ -7,10 +7,10 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
-import { RoomProvider } from './contexts/RoomContext';
-import { UserProvider } from './contexts/UserContext';
-import { ChatProvider } from './contexts/ChatContext';
-import { StyleProvider, StyleContext } from './contexts/StyleContext';
+import { RoomProvider } from './Contexts/RoomContext';
+import { UserProvider } from './Contexts/UserContext';
+import { ChatProvider } from './Contexts/ChatContext';
+import { StyleProvider, StyleContext } from './Contexts/StyleContext';
 
 import Routes from './Routes';
 

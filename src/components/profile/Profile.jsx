@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { UserContext } from "../contexts/UserContext";
-import User from "./User";
-import ThemePicker from "./ThemePicker";
+import React, { Component } from 'react';
+import { UserContext } from '../Contexts/UserContext';
+import User from './User';
+import ThemePicker from './ThemePicker';
 
 class Profile extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class Profile extends Component {
         {value => {
           const { user } = value;
           return (
-            <div style={{ padding: "10px" }}>
+            <div style={{ padding: '10px' }}>
               <ThemePicker />
               <User user={user} />
             </div>

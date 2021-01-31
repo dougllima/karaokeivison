@@ -4,7 +4,7 @@ import MainMenu from './MainMenu';
 import LoginMenu from './LoginMenu';
 import ProfileMenu from './ProfileMenu';
 
-import { UserContext } from './contexts/UserContext';
+import { UserContext } from './Contexts/UserContext';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Typography, Toolbar, AppBar } from '@material-ui/core';

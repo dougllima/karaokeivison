@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { StyleContext } from '../contexts/StyleContext';
+import { StyleContext } from '../Contexts/StyleContext';
 
 import {
   Grid,
@@ -14,9 +14,9 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import ColorPicker from './ColorPicker';
-import LightBulb from '../layout/LightBulb';
+import LightBulb from '../Layout/LightBulb';
 import SaveIcon from '@material-ui/icons/Save';
-import LightBulbOn from '../layout/LightBulbOn';
+import LightBulbOn from '../Layout/LightBulbOn';
 
 const pickers = [
   'BlockPicker',

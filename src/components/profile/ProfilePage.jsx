@@ -3,7 +3,7 @@ import React from 'react';
 import User from './User';
 import ThemePicker from './ThemePicker';
 
-import { UserContext } from '../contexts/UserContext';
+import { UserContext } from '../Contexts/UserContext';
 import {
   Typography,
   ExpansionPanel,

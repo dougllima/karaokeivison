@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import ChatWindow from './Chat/ChatWindow';
 
-import { RoomContext } from './../contexts/RoomContext';
+import { RoomContext } from './../Contexts/RoomContext';
 
 const Room = () => {
   const { room } = useContext(RoomContext);
